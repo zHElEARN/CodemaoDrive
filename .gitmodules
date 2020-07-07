@@ -25,3 +25,12 @@
 [submodule "src/github.com/stretchr/testify"]
 	path = src/github.com/stretchr/testify
 	url = http://github.com/stretchr/testify
+[submodule "src/github.com/tidwall/gjson"]
+	path = src/github.com/tidwall/gjson
+	url = http://github.com/tidwall/gjson
+[submodule "src/github.com/tidwall/match"]
+	path = src/github.com/tidwall/match
+	url = http://github.com/tidwall/match
+[submodule "src/github.com/tidwall/pretty"]
+	path = src/github.com/tidwall/pretty
+	url = http://github.com/tidwall/pretty

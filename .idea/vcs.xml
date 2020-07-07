@@ -14,6 +14,9 @@
     <mapping directory="$PROJECT_DIR$/src/github.com/mozillazg/request" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/src/github.com/pmezard/go-difflib" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/src/github.com/stretchr/testify" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/tidwall/gjson" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/tidwall/match" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/tidwall/pretty" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/src/golang.org/x/net" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/src/gopkg.in/yaml.v2" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/src/gopkg.in/yaml.v3" vcs="Git" />
