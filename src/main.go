@@ -2,40 +2,58 @@ package main
 
 import (
 	"DriveHelper"
-	"bufio"
-	"log"
+	"fmt"
 	"os"
-	"strings"
 )
-
-var (
-	Info  *log.Logger
-	Error *log.Logger
-)
-
-func init() {
-	Info = log.New(os.Stdout, "[Info] ", log.Ldate|log.Ltime|log.Lshortfile)
-	Error = log.New(os.Stderr, "[Error] ", log.Ldate|log.Ltime|log.Lshortfile)
-}
 
 func main() {
-	Info.Println("请输入要上传的文件完整路径")
-	inputReader := bufio.NewReader(os.Stdin)
-	filepath, _ := inputReader.ReadString('\n')
-	filepath = strings.Replace(filepath, "\n", "", -1)
+	// Logo
+	fmt.Println("\n $$$$$$\\                  $$\\                                             $$$$$$$\\            $$\\                      \n$$  __$$\\                 $$ |                                            $$  __$$\\           \\__|                     \n$$ /  \\__| $$$$$$\\   $$$$$$$ | $$$$$$\\  $$$$$$\\$$$$\\   $$$$$$\\   $$$$$$\\  $$ |  $$ | $$$$$$\\  $$\\ $$\\    $$\\  $$$$$$\\  \n$$ |      $$  __$$\\ $$  __$$ |$$  __$$\\ $$  _$$  _$$\\  \\____$$\\ $$  __$$\\ $$ |  $$ |$$  __$$\\ $$ |\\$$\\  $$  |$$  __$$\\ \n$$ |      $$ /  $$ |$$ /  $$ |$$$$$$$$ |$$ / $$ / $$ | $$$$$$$ |$$ /  $$ |$$ |  $$ |$$ |  \\__|$$ | \\$$\\$$  / $$$$$$$$ |\n$$ |  $$\\ $$ |  $$ |$$ |  $$ |$$   ____|$$ | $$ | $$ |$$  __$$ |$$ |  $$ |$$ |  $$ |$$ |      $$ |  \\$$$  /  $$   ____|\n\\$$$$$$  |\\$$$$$$  |\\$$$$$$$ |\\$$$$$$$\\ $$ | $$ | $$ |\\$$$$$$$ |\\$$$$$$  |$$$$$$$  |$$ |      $$ |   \\$  /   \\$$$$$$$\\ \n \\______/  \\______/  \\_______| \\_______|\\__| \\__| \\__| \\_______| \\______/ \\_______/ \\__|      \\__|    \\_/     \\_______|\n                                                                                                                       \n                                                                                                                       \n                                                                                                                       \n")
 
-	Info.Println("获得Token中...")
-	token, err := DriveHelper.GetUploadToken()
-	if err != nil {
-		Error.Println("获得Token失败, 错误信息", err)
-		os.Exit(-1)
-	}
-	Info.Println("获得Token成功")
+	var (
+		_result  = ""
+		filePath = ""
+	)
 
-	fileInfo, err := DriveHelper.UploadFile(token, filepath)
-	if err != nil {
-		Error.Println("上传文件错误", err)
-		os.Exit(-1)
+	fmt.Println("输入upload上传文件 输入download下载文件")
+	_, _ = fmt.Scan(&_result)
+	if _result == "upload" {
+		fmt.Println("请输入文件路径: ")
+		_, _ = fmt.Scan(&filePath)
+
+		token, err := DriveHelper.GetUploadToken()
+		if err != nil {
+			fmt.Println("错误", err)
+			os.Exit(-1)
+		}
+
+		fileInfo, err := DriveHelper.UploadFile(token, filePath)
+		if err != nil {
+			fmt.Println("错误", err)
+			os.Exit(-1)
+		}
+		fmt.Println("上传成功, CD码", fileInfo.BuildUri())
+
+		_pause := ""
+		_, _ = fmt.Scanln(&_pause)
+	} else if _result == "download" {
+		cdCode := ""
+		fmt.Println("请输入cd码: ")
+		_, _ = fmt.Scan(&cdCode)
+
+		result, err := DriveHelper.DownloadFile(cdCode)
+		if err != nil {
+			fmt.Println("错误", err)
+			os.Exit(-1)
+		}
+		fmt.Println("成功下载", result)
+
+		_pause := ""
+		_, _ = fmt.Scanln(&_pause)
+	} else {
+		fmt.Println("错误输入")
+
+		_pause := ""
+		_, _ = fmt.Scanln(&_pause)
 	}
-	Info.Println("上传成功 CD码", fileInfo.BuildUri())
 }

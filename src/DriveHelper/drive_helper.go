@@ -5,6 +5,9 @@ import (
 	"fmt"
 	"github.com/guonaihong/gout"
 	"github.com/tidwall/gjson"
+	"io"
+	"net/http"
+	"net/url"
 	"os"
 	"strconv"
 	"strings"
@@ -106,4 +109,30 @@ func UploadFile(token UploadToken, file string) (FileFullInfo, error) {
 	fileInfo.FileSize = _stat.Size()
 
 	return fileInfo, nil
+}
+
+func DownloadFile(cdCode string) (bool, error) {
+	fileInfo := FileFullInfo{}
+	fileInfo.FromUri(cdCode)
+
+	fileUrl, err := url.Parse("https://static.codemao.cn/" + fileInfo.FileHashInfo.Key)
+	if err != nil {
+		return false, err
+	}
+
+	response, err := http.Get(fileUrl.String())
+	if err != nil {
+		return false, err
+	}
+
+	file, err := os.Create(fileInfo.FileName)
+	if err != nil {
+		return false, err
+	}
+	_, err = io.Copy(file, response.Body)
+	if err != nil {
+		return false, err
+	}
+
+	return true, nil
 }
