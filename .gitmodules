@@ -1,0 +1,9 @@
+[submodule "src/golang.org/x/net"]
+	path = src/golang.org/x/net
+	url = https://github.com/golang/net.git
+[submodule "src/gopkg.in/yaml.v2"]
+	path = src/gopkg.in/yaml.v2
+	url = https://github.com/go-yaml/yaml.git
+[submodule "src/gopkg.in/yaml.v3"]
+	path = src/gopkg.in/yaml.v3
+	url = https://github.com/go-yaml/yaml.git
