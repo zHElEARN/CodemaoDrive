@@ -1,9 +1,0 @@
-[submodule "opt/cpr"]
-	path = opt/cpr
-	url = https://github.com/whoshuu/cpr.git
-[submodule "opt/rapidjson"]
-	path = opt/rapidjson
-	url = https://github.com/Tencent/rapidjson.git
-[submodule "opt/argparse"]
-	path = opt/argparse
-	url = https://github.com/p-ranav/argparse
