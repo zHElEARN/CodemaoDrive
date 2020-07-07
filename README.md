@@ -2,7 +2,7 @@
 
 #### 你猫云，支持任意文件的全速上传与下载
 
-![preview.png](https://i.loli.net/2020/02/26/i1sknNGF8rJQS2v.png)
+![preview.png](https://i.loli.net/2020/07/07/whR7VX3KymbLAIQ.png)
 
 ## 特色
 
@@ -14,63 +14,9 @@
 
 ### 编译
 
-首先 clone 项目
-
 ```shell
-git clone https://github.com/zHElEARN/CodemaoDrive.git
-or
-git clone git@github.com:zHElEARN/CodemaoDrive.git
-
-git submodule update --init --recursive
+go build -o CodemaoDrive.exe
 ```
-
-然后使用 cmake 生成编译文件，并使用`Visual Studio 2019`进行编译
-
-```shell
-cd CodemaoDrive
-mkdir build
-cd build
-cmake -A "Win32" ..
-devenv.exe CodemaoDrive.sln
-```
-
-### Usage
-
-```shell
-▶ .\CodemaoDrive.exe  --help
-Usage: CodemaoDrive [options] method
-
-Positional arguments:
-method          选择上传/下载方法[Required]
-
-Optional arguments:
--h --help       show this help message and exit
--d --data       要上传/下载 的 文件名/文件键值[Required]
-```
-
-### 上传
-
-```shell
-CodemaoDrive.exe upload -d filename
-```
-
-上传完毕后，终端会打印一串键值 于下载或分享，请妥善保管
-
-### 下载
-
-```shell
-CodemaoDrive.exe download -d key
-```
-
-通过键值进行下载
-
-### 历史记录
-
-```shell
-CodemaoDrive.exe histroy
-```
-
-获得保存的历史记录
 
 ## 免责声明
 
