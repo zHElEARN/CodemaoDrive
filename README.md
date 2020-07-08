@@ -2,7 +2,7 @@
 
 #### 你猫云，支持任意文件的全速上传与下载
 
-![preview.png](https://i.loli.net/2020/07/07/whR7VX3KymbLAIQ.png)
+![image.png](https://i.loli.net/2020/07/08/G2bNFn56WaTMQhZ.png)
 
 ## 特色
 
