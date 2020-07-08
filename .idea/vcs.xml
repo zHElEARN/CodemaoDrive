@@ -2,23 +2,5 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/src/github.com/bitly/go-simplejson" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/src/github.com/bmizerany/assert" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/src/github.com/davecgh/go-spew" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/src/github.com/google/uuid" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/src/github.com/guonaihong/gout" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/src/github.com/kr/pretty" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/src/github.com/kr/text" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/src/github.com/mattn/go-isatty" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/src/github.com/mgr9525/go-ruisutil" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/src/github.com/mozillazg/request" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/src/github.com/pmezard/go-difflib" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/src/github.com/stretchr/testify" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/src/github.com/tidwall/gjson" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/src/github.com/tidwall/match" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/src/github.com/tidwall/pretty" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/src/golang.org/x/net" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/src/gopkg.in/yaml.v2" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/src/gopkg.in/yaml.v3" vcs="Git" />
   </component>
 </project>
