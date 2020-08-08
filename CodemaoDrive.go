@@ -4,6 +4,8 @@ import (
 	"CodemaoDrive/Drive"
 	"fmt"
 	"github.com/mitchellh/colorstring"
+	"github.com/schollz/progressbar/v3"
+	"os"
 )
 
 func init() {
@@ -44,13 +46,41 @@ MainLabel:
 				panic(err)
 			}
 
-			fileFullInfo, err := Drive.UploadFile(token, filePath)
-			if err != nil {
-				_, _ = colorstring.Println("[red] 上传文件失败")
-				panic(err)
+			var (
+				bar       *progressbar.ProgressBar
+				lastBytes = 0
+				first     = true
+			)
+
+			ch := Drive.UploadFile(token, filePath)
+			for progress := range ch {
+				if progress.Error != nil {
+					_, _ = colorstring.Println("[red] 上传错误")
+					panic(err)
+				}
+				if progress.Success == true {
+					fmt.Println()
+					_, _ = colorstring.Println("上传成功 CD码为[green]" + progress.Data.BuildUri())
+					_, _ = colorstring.Println("在线链接为: https://static.codemao.cn/" + progress.Data.FileHashInfo.Key)
+					os.Exit(0)
+				}
+				if first {
+					bar = progressbar.Default(int64(progress.TotalBytes))
+					first = false
+				}
+				_ = bar.Add(progress.CurrentBytes - lastBytes)
+				lastBytes = progress.CurrentBytes
 			}
 
-			_, _ = colorstring.Println("上传成功 CD码为[green]" + fileFullInfo.BuildUri())
+			/*
+				fileFullInfo, err := Drive.UploadFileOld(token, filePath)
+				if err != nil {
+					_, _ = colorstring.Println("[red] 上传文件失败")
+					panic(err)
+				}
+
+				_, _ = colorstring.Println("上传成功 CD码为[green]" + fileFullInfo.BuildUri())
+			*/
 		}
 	case "download":
 		{

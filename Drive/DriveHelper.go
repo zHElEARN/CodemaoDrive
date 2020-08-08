@@ -3,6 +3,7 @@ package Drive
 import (
 	"encoding/base64"
 	"fmt"
+	"github.com/antlabs/gout-middleware/request"
 	"github.com/guonaihong/gout"
 	"github.com/tidwall/gjson"
 	"io"
@@ -22,6 +23,15 @@ type FileFullInfo struct {
 	FileHashInfo FileHashInfo
 	FileName     string
 	FileSize     int64
+}
+
+type Progress struct {
+	CurrentBytes int
+	TotalBytes   int
+	Rate         float64
+	Error        error
+	Data         FileFullInfo
+	Success      bool
 }
 
 type UploadToken string
@@ -76,7 +86,7 @@ func GetUploadToken() (UploadToken, error) {
 	return UploadToken(gjson.Get(responseBody, "data.0.token").String()), nil
 }
 
-func UploadFile(token UploadToken, file string) (FileFullInfo, error) {
+func UploadFileOld(token UploadToken, file string) (FileFullInfo, error) {
 	var (
 		statusCode   int
 		responseBody string
@@ -109,6 +119,49 @@ func UploadFile(token UploadToken, file string) (FileFullInfo, error) {
 	fileInfo.FileSize = _stat.Size()
 
 	return fileInfo, nil
+}
+
+func UploadFile(token UploadToken, file string) chan Progress {
+	ch := make(chan Progress)
+
+	go func() {
+		var (
+			statusCode   int
+			responseBody string
+			fileInfo     FileFullInfo
+		)
+
+		if !FileExist(file) {
+			ch <- Progress{Error: fmt.Errorf("file not found")}
+		}
+
+		err := gout.
+			POST("https://upload.qiniup.com/").
+			SetForm(
+				gout.H{
+					"token": token,
+					"file":  gout.FormFile(file),
+				},
+			).
+			Code(&statusCode).
+			BindBody(&responseBody).
+			RequestUse(request.ProgressBar(func(currBytes, totalBytes int) {
+				ch <- Progress{CurrentBytes: currBytes, TotalBytes: totalBytes, Rate: float64(currBytes) / float64(totalBytes), Error: nil, Success: false}
+			})).
+			Do()
+		if err != nil {
+			ch <- Progress{Error: err}
+		}
+
+		fileInfo.FileHashInfo.Hash = gjson.Get(responseBody, "hash").String()
+		fileInfo.FileHashInfo.Key = gjson.Get(responseBody, "hash").String()
+		_stat, _ := os.Stat(file)
+		fileInfo.FileName = _stat.Name()
+		fileInfo.FileSize = _stat.Size()
+
+		ch <- Progress{Data: fileInfo, Success: true}
+	}()
+	return ch
 }
 
 func DownloadFile(cdCode string) (bool, error) {
